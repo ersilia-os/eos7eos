@@ -2,44 +2,36 @@ Identifier: eos7eos
 Slug: synfrag-accessibility
 Status: In progress
 Title: SynFrag Synthetic Accessibility
-Description: Scores how easily a molecule can be synthesized, from its SMILES 
-  alone. SynFrag pretrains an AttentiveFP graph network on 9.18 million 
-  unlabelled molecules by rebuilding them fragment by fragment, then finetunes 
-  it on 800, 000 molecules labelled easy or hard to make with the Retro* 
-  planner. Higher values mean easier synthesis. The authors tested it on public 
-  benchmarks, clinical drugs and AI-generated molecules; scores are not 
-  calibrated probabilities.
+Description: Scores how easy a molecule is to synthesize from its SMILES alone. SynFrag
+  pretrains an AttentiveFP graph network on 9.18 million unlabelled molecules by
+  rebuilding them fragment by fragment, then finetunes it on 800,000 molecules
+  labelled easy or hard to make by the Retro* planner. The authors benchmarked
+  it on public sets, clinical drugs and AI-generated molecules. Scores are not
+  calibrated probabilities, and molecules without bonds return no value.
 Deployment:
   - Local
-  - Online
-Source: Local, Online
-Source Type: Internal, Replicated, External
-Task: Annotation, Representation, Sampling
-Subtask: Property calculation or prediction, Activity prediction, Featurization,
-  Projection, Similarity search, Generation
+Source: Local
+Source Type: External
+Task: Annotation
+Subtask: Property calculation or prediction
 Input:
   - Compound
 Input Dimension: 1
 Output:
-  - Value
   - Score
-  - Compound
-  - Text
 Output Dimension: 1
-Output Consistency: Fixed, Variable
-Interpretation: The output of this template model should be interpreted like 
-  this.
+Output Consistency: Fixed
+Interpretation: Higher values indicate easier synthesis; the authors treat scores of 0.5 or
+  above as easy to synthesize.
 Tag:
   - Synthetic accessibility
   - Chemical synthesis
   - Chemical graph model
 Biomedical Area:
-  - Biomedical Area 1
-  - Biomedical Area 2
+  - Any
 Target Organism:
-  - Target Organism 1
-  - Target Organism 2
-Publication Type: Peer reviewed, Preprint, Other
+  - Any
+Publication Type: Peer reviewed
 Publication Year: 2026
 Publication: https://doi.org/10.1021/acs.jcim.5c02450
 Source Code: https://github.com/simmzx/SynFrag
