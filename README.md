@@ -2,6 +2,7 @@
 
 Scores how easy a molecule is to synthesize from its SMILES alone. SynFrag pretrains an AttentiveFP graph network on 9.18 million unlabelled molecules by rebuilding them fragment by fragment, then finetunes it on 800,000 molecules labelled easy or hard to make by the Retro\* planner. The authors benchmarked it on public sets, clinical drugs and AI-generated molecules. Scores are not calibrated probabilities, and molecules without bonds return no value.
 
+This model was incorporated on 2026-10-07.
 
 
 ## Information
@@ -34,8 +35,11 @@ Below are the **Output Columns** of the model:
 ### Source and Deployment
 - **Source:** `Local`
 - **Source Type:** `External`
+- **S3 Storage**: [https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos7eos.zip](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos7eos.zip)
 
 ### Resource Consumption
+- **Model Size (Mb):** `13`
+- **Environment Size (Mb):** `1527`
 
 
 ### References
