@@ -1,56 +1,76 @@
-# Ersilia Model Template
+# SynFrag Synthetic Accessibility
 
-This document contains the instructions to incorporate a model. Please follow along to bring your model into the [Ersilia Model Hub](https://github.com/ersilia-os/ersilia). After successful incorporation of the model, this README file will be **automatically updated** to reflect model specific details.
+Scores how easy a molecule is to synthesize from its SMILES alone. SynFrag pretrains an AttentiveFP graph network on 9.18 million unlabelled molecules by rebuilding them fragment by fragment, then finetunes it on 800,000 molecules labelled easy or hard to make by the Retro\* planner. The authors benchmarked it on public sets, clinical drugs and AI-generated molecules. Scores are not calibrated probabilities, and molecules without bonds return no value.
 
-Further information about model incorporation can be found in our [Documentation](https://ersilia.gitbook.io/ersilia-book/ersilia-model-hub/model-contribution/).
 
-## Template Structure
 
-The model template is organized in two parts, i.e. the (a) model code and parameters, and (b) the metadata and installation instructions
+## Information
+### Identifiers
+- **Ersilia Identifier:** `eos7eos`
+- **Slug:** `synfrag-accessibility`
 
-### The Model Folder
+### Domain
+- **Task:** `Annotation`
+- **Subtask:** `Property calculation or prediction`
+- **Biomedical Area:** `Any`
+- **Target Organism:** `Any`
+- **Tags:** `Synthetic accessibility`, `Chemical synthesis`, `Chemical graph model`
 
-Generally, two important pieces make up a model that goes into the Ersilia Model Hub: (a) the model checkpoints and (b) the code to load those checkpoints and make predictions with that model (framework). With that in mind, the model folder is organised as follows:
+### Input
+- **Input:** `Compound`
+- **Input Dimension:** `1`
 
-- `model/checkpoints` contains checkpoint files required by the model. This directory is optional.
-- `model/framework` contains the driver code to load the model and run inferences from it. There are two files of interest here: `code/main.py`, and `run.sh`. The `code/main.py` file will contain the primary code to load model checkpoints and run the model, and can obviously refer to other files and packages contained within the `code` directory. The `run.sh` serves two purposes, it runs the code in the `main.py` file and also tells Ersilia that this model server will have a `run` API. The `run.sh` file is mandatory while the `code/main.py` is optional.
-- `model/framework/examples` contains an example input file (should have three smiles under the header smiles, this file can be generated with the `ersilia example` command) and the output of running the `run.sh` on the example inputs. Both `run_input.csv` and `run_output.csv` are mandatory.
-- `model/framework/columns` contains a template of the expected output columns, indicating their name, type (float, integer or string), direction (high, low, or empty) and a short one-sentence description. For more rules on how to fill in this file, check our [documentation](https://ersilia.gitbook.io/ersilia-book/ersilia-model-hub/model-contribution/model-template). The `run_columns.csv` file is mandatory.
+### Output
+- **Output Dimension:** `1`
+- **Output Consistency:** `Fixed`
+- **Interpretation:** Higher values indicate easier synthesis; the authors treat scores of 0.5 or above as easy to synthesize.
 
-### Metadata, Installation, and Other Templated Files
+Below are the **Output Columns** of the model:
+| Name | Type | Direction | Description |
+|------|------|-----------|-------------|
+| synfrag | float | high | Synthetic accessibility score where higher values mean easier to synthesize (not a calibrated probability) |
 
-In addition to adding the model checkpoints, the code for running them and the example and columns file, you'll need to edit the following:
 
-#### Model Dependencies
+### Source and Deployment
+- **Source:** `Local`
+- **Source Type:** `External`
 
-Use the `install.yml` file to specify all the necessary dependencies required by the model to successfully run. This dependency configuration file has two top level keys:
+### Resource Consumption
 
-- The `python` field expects a string value denoting a python version (e.g. `"3.12"`)
-- The `commands` field expects a list of values, each of which is a list on its own, denoting the dependencies required by the model. Currently, `pip` and `conda` dependencies are supported using this syntax. 
-    - `pip` dependencies are expected to be one of the following lists:
-        -  Versioned dependency: three element lists in the format `["pip", "library", "version"]`
-        - Versioned dependency with additional flags: five element lists in the format `["pip", "library", "version", "--index-url", "URL"]`
-        - VCS-based dependency: four element lists in the format `['pip', 'URL']`. E.g `["pip", "git+https://github.com/bp-kelley/descriptastorus.git@9a190343bcd3cfd35142d378d952613bcac40797"]`.
-    - `conda` dependencies are expected to be four element lists in the format `["conda", "library", "version", "channel"]`, where channel is the conda channel to install the required library.
-    - For other `bash` commands, simply specify them as a oneliner string.
 
-The installation parser will raise an exception if dependencies are not specified in the aforementioned format.
+### References
+- **Source Code**: [https://github.com/simmzx/SynFrag](https://github.com/simmzx/SynFrag)
+- **Publication**: [https://doi.org/10.1021/acs.jcim.5c02450](https://doi.org/10.1021/acs.jcim.5c02450)
+- **Publication Type:** `Peer reviewed`
+- **Publication Year:** `2026`
+- **Ersilia Contributor:** [TiagoJanela](https://github.com/TiagoJanela)
 
-#### Model Metadata
+### License
+This package is licensed under a [GPL-3.0](https://github.com/ersilia-os/ersilia/blob/master/LICENSE) license. The model contained within this package is licensed under a [MIT](LICENSE) license.
 
-Model metadata should be specified within `metadata.yml`. A detailed explanation of what the metadata fields correspond to can be found [here](https://ersilia.gitbook.io/ersilia-book/ersilia-model-hub/incorporate-models/model-template). Note that some fields will be automatically updated upon model incorporation in Ersilia.
+**Notice**: Ersilia grants access to models _as is_, directly from the original authors, please refer to the original code repository and/or publication if you use the model in your research.
 
-#### Other Relevant Files
 
-- The `.dockerignore` file can be used to specify which files and folders should not be included in the eventual Docker image. By default, the `.git` folder is ignored. Other files to be ignored could include training data of the model, which will be available in GitHub and S3 but is not needed to run the model image. This is devised to reduce the final size of the images.
+## Use
+To use this model locally, you need to have the [Ersilia CLI](https://github.com/ersilia-os/ersilia) installed.
+The model can be **fetched** using the following command:
+```bash
+# fetch model from the Ersilia Model Hub
+ersilia fetch eos7eos
+```
+Then, you can **serve**, **run** and **close** the model as follows:
+```bash
+# serve the model
+ersilia serve eos7eos
+# generate an example file
+ersilia example -n 3 -f my_input.csv
+# run the model
+ersilia run -i my_input.csv -o my_output.csv
+# close the model
+ersilia close
+```
 
-- Consider adding a `.gitattributes` file if your model contains large files. In this file, you can specify which files should be handled with [Git LFS](https://git-lfs.com/).
-
-- As you work with the model, use the `.gitignore` file appropriately to ensure that only relevant files are included in the model repository.
-
-- As mentioned above, the `README.md` file **should not be modified**. It will automatically be updated when the model is incorporated in the Ersilia Model Hub.
-
-## Tracking and Workflows
-
-- The [EOSVC](https://github.com/ersilia-os/eosvc) tool is used to persist the `model/checkpoints` and `model/framework/fit` folders. Edit the `access.json` file if you want to keep those folders private. They are public by default.
-- Models are not ready until they pass all GitHub Actions workflows.
+## About Ersilia
+The [Ersilia Open Source Initiative](https://ersilia.io) is a tech non-profit organization fueling sustainable research in the Global South.
+Please [cite](https://github.com/ersilia-os/ersilia/blob/master/CITATION.cff) the Ersilia Model Hub if you've found this model to be useful. Always [let us know](https://github.com/ersilia-os/ersilia/issues) if you experience any issues while trying to run it.
+If you want to contribute to our mission, consider [donating](https://www.ersilia.io/donate) to Ersilia!
