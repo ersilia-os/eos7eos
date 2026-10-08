@@ -1,6 +1,6 @@
 Identifier: eos7eos
 Slug: synfrag-accessibility
-Status: In progress
+Status: Ready
 Title: SynFrag Synthetic Accessibility
 Description: Scores how easy a molecule is to synthesize from its SMILES alone. 
   SynFrag pretrains an AttentiveFP graph network on 9.18 million unlabelled 
@@ -39,6 +39,16 @@ Source Code: https://github.com/simmzx/SynFrag
 License: MIT
 Contributor: TiagoJanela
 Incorporation Date: '2026-10-07'
+Last Packaging Date: '2026-10-08'
+Release: v1.0.0
 S3: https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos7eos.zip
+DockerHub: https://hub.docker.com/r/ersiliaos/eos7eos
+Docker Architecture: AMD64
 Model Size: 13.0
 Environment Size: 1527.0
+Image Size: 1530.58
+Computational Performance 1: 30.89
+Computational Performance 2: 19.91
+Computational Performance 3: 21.82
+Computational Performance 4: 55.73
+Computational Performance 5: 214.29
