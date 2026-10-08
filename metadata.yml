@@ -2,12 +2,13 @@ Identifier: eos7eos
 Slug: synfrag-accessibility
 Status: In progress
 Title: SynFrag Synthetic Accessibility
-Description: Scores how easy a molecule is to synthesize from its SMILES alone. SynFrag
-  pretrains an AttentiveFP graph network on 9.18 million unlabelled molecules by
-  rebuilding them fragment by fragment, then finetunes it on 800,000 molecules
-  labelled easy or hard to make by the Retro* planner. The authors benchmarked
-  it on public sets, clinical drugs and AI-generated molecules. Scores are not
-  calibrated probabilities, and molecules without bonds return no value.
+Description: Scores how easy a molecule is to synthesize from its SMILES alone. 
+  SynFrag pretrains an AttentiveFP graph network on 9.18 million unlabelled 
+  molecules by rebuilding them fragment by fragment, then finetunes it on 
+  800,000 molecules labelled easy or hard to make by the Retro* planner. The 
+  authors benchmarked it on public sets, clinical drugs and AI-generated 
+  molecules. Scores are not calibrated probabilities, and molecules without 
+  bonds return no value.
 Deployment:
   - Local
 Source: Local
@@ -21,8 +22,8 @@ Output:
   - Score
 Output Dimension: 1
 Output Consistency: Fixed
-Interpretation: Higher values indicate easier synthesis; the authors treat scores of 0.5 or
-  above as easy to synthesize.
+Interpretation: Higher values indicate easier synthesis; the authors treat 
+  scores of 0.5 or above as easy to synthesize.
 Tag:
   - Synthetic accessibility
   - Chemical synthesis
@@ -37,3 +38,4 @@ Publication: https://doi.org/10.1021/acs.jcim.5c02450
 Source Code: https://github.com/simmzx/SynFrag
 License: MIT
 Contributor: TiagoJanela
+Incorporation Date: '2026-10-07'
