@@ -44,6 +44,7 @@ Release: v1.0.1
 S3: https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos7eos.zip
 DockerHub: https://hub.docker.com/r/ersiliaos/eos7eos
 Docker Architecture: AMD64
+Apptainer: https://models-sif.s3.eu-north-1.amazonaws.com/eos7eos_v1.sif
 Model Size: 13.0
 Environment Size: 1527.0
 Image Size: 1530.58
